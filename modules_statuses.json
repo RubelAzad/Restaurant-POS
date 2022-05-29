@@ -1,0 +1,16 @@
+{
+    "Base": true,
+    "Category": true,
+    "System": true,
+    "Supplier": true,
+    "Customer": true,
+    "Product": true,
+    "Purchase": true,
+    "Account": true,
+    "Expense": true,
+    "Sale": true,
+    "HRM": true,
+    "Report": true,
+    "Stock": true,
+    "Restaurant": true
+}
