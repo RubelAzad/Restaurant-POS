@@ -69,9 +69,10 @@ class RtablesController extends BaseController
                     $row[] = $no;
                     $row[] = $value->name;
                     $row[] = $value->capacity;
+                    $row[] = $value->min_capacity;
                     $row[] = $this->avatar($value);
                     $row[] = $value->floor->name;
-                    $row[] = permission('rtable-edit') ? change_status($value->id,$value->status,$value->name) : STATUS_LABEL[$value->status];;
+                    $row[] = permission('rtable-edit') ? change_status($value->id,$value->status,$value->name) : STATUS_LABEL[$value->status];
                     $row[] = action_button($action);
                     $data[] = $row;
                 }
@@ -97,6 +98,7 @@ class RtablesController extends BaseController
     {
         if($request->ajax()){
             if(permission('rtable-add') || permission('rtable-edit')){
+                $booking_status = 'available';
                 $collection = collect($request->validated())->except(['image']);
                 $image = $request->old_image;
                 if($request->hasFile('image')){
@@ -106,7 +108,7 @@ class RtablesController extends BaseController
                         $this->delete_file($request->old_image,TABLE_IMAGE_PATH);
                     }
                 }
-                $collection = $collection->merge(compact('image'));
+                $collection = $collection->merge(compact('image','booking_status'));
                 $collection = $this->track_data($request->update_id,$collection);
                 $result = $this->model->updateOrCreate(['id'=>$request->update_id],$collection->all());
 

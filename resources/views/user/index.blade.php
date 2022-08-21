@@ -4,6 +4,9 @@
     {{ $page_title }}
 @endsection
 
+@push('stylesheet')
+<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+@endpush
 @section('content')
 <div class="dt-content">
 
@@ -109,6 +112,9 @@
 @endsection
 
 @push('script')
+<script src="js/spartan-multi-image-picker-min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
 <script>
 var table;
 $(document).ready(function(){
@@ -324,9 +330,19 @@ $(document).ready(function(){
                     $('#store_or_update_form #update_id').val(data.data.id);
                     $('#store_or_update_form #name').val(data.data.name);
                     $('#store_or_update_form #email').val(data.data.email);
+                   // $('#store_or_update_form #pos_permission_access').val(data.data.pos_permission_access);
                     $('#store_or_update_form #mobile_no').val(data.data.mobile_no);
                     $('#store_or_update_form #gender').val(data.data.gender);
                     $('#store_or_update_form #role_id').val(data.data.role_id);
+
+                   let riMenuArray = data.data.pos_permission_access.split(',');
+                    console.log(riMenuArray);
+                    let riMenuInputs = $('.riMenuInputs input[type="checkbox"]');
+                    riMenuInputs.each(function(){
+                        if(riMenuArray.includes($(this).val())){
+                            $(this).prop('checked', true);
+                        }
+                    });
                     $('#store_or_update_form .selectpicker').selectpicker('refresh');
                     $('#password, #password_confirmation').parents('.form-group').removeClass('required');
                     $('#store_or_update_modal').modal({

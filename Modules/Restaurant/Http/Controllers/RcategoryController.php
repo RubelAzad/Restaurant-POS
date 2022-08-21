@@ -165,5 +165,10 @@ class RcategoryController extends BaseController
         }
     }
 
+    public function apiGetCategrory(){
+        $allCategory = Rcategory::all();
+        return response()->json($allCategory);
+    }
+
     
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,5 +86,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('setting','SettingController@index')->name('setting');
     Route::post('general-setting','SettingController@general_seting')->name('general.setting');
     Route::post('mail-setting','SettingController@mail_setting')->name('mail.setting');
+
+
+    Route::get('pos', 'PointOfSalesController@index')->name('pos');
+    Route::group(['prefix' => 'pos', 'as'=>'pos.'], function () {
+    Route::post('datatable-data', 'PointOfSalesController@get_datatable_data')->name('datatable.data');
+    Route::post('store-or-update', 'PointOfSalesController@store_or_update_data')->name('store.or.update');
+    Route::post('edit', 'PointOfSalesController@edit')->name('edit');
+    Route::post('delete', 'PointOfSalesController@delete')->name('delete');
+    Route::post('bulk-delete', 'PointOfSalesController@bulk_delete')->name('bulk.delete');
+    Route::post('change-status', 'PointOfSalesController@change_status')->name('change.status');
+    });
+    
     
 });

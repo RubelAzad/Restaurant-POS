@@ -1,0 +1,13 @@
+{
+    "name": "CardSettings",
+    "alias": "cardsettings",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CardSettings\\Providers\\CardSettingsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

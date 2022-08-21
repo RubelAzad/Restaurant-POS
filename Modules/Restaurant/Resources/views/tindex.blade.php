@@ -95,6 +95,7 @@
                                 <th>Sl</th>
                                 <th>Name</th>
                                 <th>Capacity</th>
+                                <th>Min Capacity</th>
                                 <th>Image</th>
                                 <th>floor</th>
                                 <th>Status</th>
@@ -156,18 +157,18 @@ $(document).ready(function(){
         },
         "columnDefs": [{
                 @if (permission('rtable-bulk-delete'))
-                "targets": [0,7],
+                "targets": [0,8],
                 @else 
-                "targets": [6],
+                "targets": [7],
                 @endif
                 "orderable": false,
                 "className": "text-center"
             },
             {
                 @if (permission('rtable-bulk-delete'))
-                "targets": [1,6],
+                "targets": [1,8],
                 @else 
-                "targets": [0,5],
+                "targets": [0,7],
                 @endif
                 "className": "text-center"
             }
@@ -285,6 +286,7 @@ $(document).ready(function(){
                     $('#store_or_update_form #name').val(data.name);
                     $('#store_or_update_form #capacity').val(data.capacity);
                     $('#store_or_update_form #floor_id').val(data.floor_id);
+                    $('#store_or_update_form #min_capacity').val(data.min_capacity);
 
                     if(data.image){
                         var image = "{{ asset('storage/'.TABLE_IMAGE_PATH)}}/"+data.image;

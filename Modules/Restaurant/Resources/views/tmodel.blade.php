@@ -30,6 +30,7 @@
                             @endforeach
                         @endif
                       </x-form.selectbox>
+                      <x-form.textbox labelName="Minimun Capacity" name="min_capacity" col="col-md-6" required="required" placeholder="Enter Minimun Capacity"/>
                     </div>
                   </div>
                   <div class="col-md-3">

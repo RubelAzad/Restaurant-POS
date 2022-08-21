@@ -4,6 +4,9 @@ define('USER_AVATAR_PATH','user/');
 define('EMPLOYEE_IMAGE_PATH','employee/');
 define('TABLE_IMAGE_PATH','rtable/');
 define('ITEM_IMAGE_PATH','ritem/');
+define('CARD_IMAGE_PATH','card/');
+define('TASK_AFTER_IMAGE_PATH','after/');
+define('TASK_BEFORE_IMAGE_PATH','before/');
 define('BRAND_IMAGE_PATH','brand/');
 define('PRODUCT_IMAGE_PATH','product/');
 define('PURCHASE_DOCUMENT_PATH','purchase-document/');
@@ -44,6 +47,9 @@ define('DELETABLE',['1'=>'No','2'=>'Yes']);
 define('STATUS_LABEL',
 ['1'=>'<span class="badge badge-success">Active</span>',
 '2'=>'<span class="badge badge-danger">Inactive</span>']);
+define('BOOKING_STATUS_LABEL',
+['reserved'=>'<span class="badge badge-info">Reserved</span>',
+'cancel'=>'<span class="badge badge-danger">Cancel</span>']);
 
 define('MAIL_MAILER',['smtp','sendmal','mail']);
 define('MAIL_ENCRYPTION',['none'=>'null','tls'=>'tls','ssl'=>'ssl']);

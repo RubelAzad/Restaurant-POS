@@ -5,7 +5,7 @@
 @endsection
 
 @push('stylesheet')
-    
+<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 @endpush
 
 @section('content')
@@ -78,6 +78,7 @@
                                 <th>Sl</th>
                                 <th>Image</th>
                                 <th>Food Name</th>
+                                <th>Category</th>
                                 <th>Price</th>
                                 <th>Qty</th>
                                 <th>Alert Qty</th>
@@ -111,6 +112,7 @@
 <script src="js/spartan-multi-image-picker-min.js"></script>
 <script src="js/moment.min.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
+
 <script type="text/javascript">
 
    
@@ -164,18 +166,18 @@ $(document).ready(function(){
         },
         "columnDefs": [{
                 @if (permission('ritem-bulk-delete'))
-                "targets": [0,11],
+                "targets": [0,12],
                 @else 
-                "targets": [10],
+                "targets": [11],
                 @endif
                 "orderable": false,
                 "className": "text-center"
             },
             {
                 @if (permission('ritem-bulk-delete'))
-                "targets": [1,2,3,4,5,6,7,10],
+                "targets": [1,2,3,4,5,6,7,10,11],
                 @else 
-                "targets": [0,1,3,4,5,6,9],
+                "targets": [0,1,3,4,5,6,9,10],
                 @endif
                 "className": "text-center"
             },
@@ -360,13 +362,14 @@ $(document).ready(function(){
                     $('#offer').prop('checked' , data.offer);
                     $('.dependentOnOffer').show();
                     
-                    $('#store_or_update_form #special').val(data.special);
+                    $('#store_or_update_form #special').prop('checked' ,data.special);
                     $('#store_or_update_form #oc_time').val(data.oc_time);
                     $('#store_or_update_form #op_rate').val(data.op_rate);
                     $('#store_or_update_form #os_date').val(data.os_date);
                     $('#store_or_update_form #oe_date').val(data.oe_date);
-                    $('#store_or_update_form #ri_menu').val(data.ri_menu);
-
+                    //$('#store_or_update_form #ri_menu').val(data.ri_menu);
+                    
+                    
                     let riMenuArray = data.ri_menu.split(',');
                     console.log(riMenuArray);
                     let riMenuInputs = $('.riMenuInputs input[type="checkbox"]');
@@ -374,12 +377,11 @@ $(document).ready(function(){
                         if(riMenuArray.includes($(this).val())){
                             $(this).prop('checked', true);
                         }
-                    })
+                    });
 
 
                     $('#store_or_update_form #old_image').val(data.image);
                     $('#store_or_update_form .selectpicker').selectpicker('refresh');
-                    populate_unit(data.unit_id,data.purchase_unit_id,data.sale_unit_id);
                     if(data.image){
                         var image = "{{ asset('storage/'.ITEM_IMAGE_PATH)}}/"+data.image;
                         $('#store_or_update_form #image img.spartan_image_placeholder').css('display','none');
@@ -479,30 +481,6 @@ $(document).ready(function(){
 
 });
 
-function populate_unit(unit_id,purchase_unit_id='',sale_unit_id='')
-{
-    $.ajax({
-        url:"{{ url('populate-unit') }}/"+unit_id,
-        type:"GET",
-        dataType:"JSON",
-        success:function(data){
-            $('#sale_unit_id').empty();
-            $('#purchase_unit_id').empty();
-            $.each(data, function(key, value) {
-                $('#sale_unit_id').append('<option value="'+ key +'">'+ value +'</option>');
-                $('#purchase_unit_id').append('<option value="'+ key +'">'+ value +'</option>');
-            });
-            $('.selectpicker').selectpicker('refresh');
-            if(purchase_unit_id){
-                $('#purchase_unit_id').val(purchase_unit_id);
-            }
-            if(sale_unit_id){
-                $('#sale_unit_id').val(sale_unit_id);
-            }
-            $('.selectpicker').selectpicker('refresh');
-        },
-    });
-}
 
 function showStoreFormModal(modal_title, btn_text)
 {

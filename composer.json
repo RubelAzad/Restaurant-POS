@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "gladcodes/keygen": "^1.1",
         "guzzlehttp/guzzle": "^7.0.1",
+        "haruncpi/laravel-query-log": "^1.0",
         "laravel/framework": "^8.17",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",

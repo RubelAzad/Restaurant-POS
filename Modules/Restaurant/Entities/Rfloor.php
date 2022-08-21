@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Restaurant\Entities;
-
+use Modules\Restaurant\Entities\Reservation;
 use Modules\Base\Entities\BaseModel;
 
 class Rfloor extends BaseModel
@@ -14,6 +14,10 @@ class Rfloor extends BaseModel
     {
         $this->name = $name;
     }
+    public function reservationLInk()
+     {
+         return $this->belongsTo(Reservation::class,'table_id','id');
+     }
 
     private function get_datatable_query()
     {

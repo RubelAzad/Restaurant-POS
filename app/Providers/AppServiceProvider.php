@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         $alert_product = DB::table('products')->where('status',1)->whereColumn('alert_qty','>','qty')->count();
         View::share('alert_product',$alert_product);
     }

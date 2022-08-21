@@ -81,7 +81,6 @@
                                 <th>Sl</th>
                                 <th>Variant Name</th>
                                 <th>Food Name</th>
-                                <th>Price</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -139,18 +138,18 @@ $(document).ready(function(){
         },
         "columnDefs": [{
                 @if (permission('rvariant-bulk-delete'))
-                "targets": [0,6],
+                "targets": [0,5],
                 @else 
-                "targets": [5],
+                "targets": [4],
                 @endif
                 "orderable": false,
                 "className": "text-center"
             },
             {
                 @if (permission('rvariant-bulk-delete'))
-                "targets": [1,2,3,4,5],
+                "targets": [1,2,3,4],
                 @else 
-                "targets": [0,1,2,3,4],
+                "targets": [0,1,2,3],
                 @endif
                 "className": "text-center"
             }

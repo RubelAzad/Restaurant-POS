@@ -1,5 +1,4 @@
-<div class="modal fade" id="store_or_update_modal" tabindex="-1" role="dialog" aria-labelledby="model-1"
-    aria-hidden="true">
+<div class="modal fade" id="store_or_update_modal" tabindex="-1" role="dialog" aria-labelledby="model-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
 
         <!-- Modal Content -->
@@ -23,6 +22,32 @@
                             placeholder="Enter name" />
                         <x-form.textbox labelName="Email" name="email" required="required" col="col-md-12"
                             placeholder="Enter email" />
+                        <div class="col-md-12 riMenuInputs">
+                            <div class="ant-card ant-card-bordered gx-card">
+                                <div class="ant-card-head">
+                                    <div class="ant-card-head-wrapper">
+                                        <div class="ant-card-head-title">POS Permission</div>
+                                    </div>
+                                </div><br>
+                                <div class="ant-card-body">
+                                    <div class="ant-checkbox-group" id="pos_permission_access">
+                                        @if (!$posPermissions->isEmpty())
+                                            @foreach ($posPermissions as $posPermission)
+                                                <label class="ant-checkbox-wrapper ant-checkbox-group-item">
+                                                    <span class="ant-checkbox">
+                                                        <input type="checkbox" name="pos_permission_access[]"
+                                                            class="ant-checkbox-input" value="{{ $posPermission->name }}">
+                                                        <span class="ant-checkbox-inner"></span>
+                                                    </span>
+                                                    <span>{{ $posPermission->name }}</span>
+                                                </label>
+                                            @endforeach
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <x-form.textbox labelName="Mobile No" name="mobile_no" required="required" col="col-md-12"
                             placeholder="Enter mobile_no" />
                         <x-form.selectbox labelName="Gender" name="gender" required="required" col="col-md-12"
@@ -33,7 +58,7 @@
                         <x-form.selectbox labelName="Role" name="role_id" required="required" col="col-md-12"
                             class="selectpicker">
                             @foreach ($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                             @endforeach
                         </x-form.selectbox>
                         <div class="form-group col-md-12">
@@ -62,8 +87,8 @@
                                     id="password_confirmation">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-primary">
-                                        <i class="fas fa-eye toggle-password text-white" toggle="#password_confirmation"
-                                            style="cursor: pointer;"></i>
+                                        <i class="fas fa-eye toggle-password text-white"
+                                            toggle="#password_confirmation" style="cursor: pointer;"></i>
                                     </span>
                                 </div>
                             </div>

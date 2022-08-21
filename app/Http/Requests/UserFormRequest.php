@@ -29,6 +29,7 @@ class UserFormRequest extends FormRequest
         $this->rules['email'] = ['required','string','email','unique:users,email'];
         $this->rules['mobile_no'] = ['required','string','max:15','unique:users,mobile_no'];
         $this->rules['gender'] = ['required','integer'];
+        $this->rules['pos_permission_access'] = ['nullable'];
         $this->rules['role_id'] = ['required','integer'];
         $this->rules['password'] = ['required','string','min:8','confirmed'];
         $this->rules['password_confirmation'] = ['required','string','min:8'];

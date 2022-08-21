@@ -88,12 +88,13 @@ class UserService extends BaseService{
     public function store_or_update_data(Request $request)
     {
         $collection = collect($request->validated())->except(['password','password_confirmation']);
+        $pos_permission_access = implode(',', $request->pos_permission_access);
         $created_at = $updated_at = Carbon::now();
         $created_by = $modified_by = auth()->user()->name;
         if($request->update_id){
-            $collection = $collection->merge(compact('modified_by','updated_at'));
+            $collection = $collection->merge(compact('modified_by','updated_at','pos_permission_access'));
         }else{
-            $collection = $collection->merge(compact('created_by','created_at'));
+            $collection = $collection->merge(compact('created_by','created_at','pos_permission_access'));
         }
         if($request->password){
             $collection = $collection->merge(with(['password' => $request->password ]));

@@ -16776,7 +16776,7 @@ a:focus {
 }
 
 .dt-brand {
-    width: 240px;
+    width: 265px;
     background-color: #036;
     color: #fff;
     padding: 0 2rem;
@@ -17831,7 +17831,7 @@ a:focus {
 
 .dt-sidebar {
     position: relative;
-    width: 240px;
+    width: 265px;
     display: flex;
     flex-direction: column;
     background-color: #036;
@@ -17884,7 +17884,7 @@ a:focus {
 
 .dt-sidebar--fixed .dt-sidebar+.dt-content-wrapper {
     transition: all 0.2s ease;
-    margin-left: 240px
+    margin-left: 265px
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -18018,12 +18018,12 @@ a:focus {
 
 .dt-side-nav__sub-menu .dt-side-nav__link {
     color: #ffffff;
-    padding-left: 80px
+    padding-left: 42px;
 }
 
 .dt-side-nav__sub-menu .dt-side-nav__link.active {
     background-color: #036;
-    color: #fa8c16
+    color: #52c41a
 }
 
 .dt-side-nav__sub-menu .dt-side-nav__link.active:after {
@@ -18034,7 +18034,7 @@ a:focus {
     display: inline-block;
     height: 100%;
     width: 2px;
-    background-color: #fa8c16
+    background-color: #52c41a
 }
 
 .theme-dark .dt-side-nav__sub-menu .dt-side-nav__link.active:after,
@@ -18046,7 +18046,7 @@ a:focus {
 .dt-side-nav__sub-menu .dt-side-nav__link:hover,
 .dt-side-nav__sub-menu .dt-side-nav__link:focus,
 .dt-side-nav__sub-menu .dt-side-nav__link:active {
-    color: #fa8c16
+    color: #52c41a
 }
 
 .dt-sidebar--fixed:not(.dt-header--fixed):not(.theme-semidark):not(.theme-dark) .dt-sidebar {

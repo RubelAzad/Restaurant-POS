@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'reservation_url' => env('APP_API_URL', 'http://192.168.10.25:2006/'),
 
     'asset_url' => env('ASSET_URL', null),
 

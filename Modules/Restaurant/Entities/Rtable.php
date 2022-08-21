@@ -1,15 +1,20 @@
 <?php
 namespace Modules\Restaurant\Entities;
 use Modules\Restaurant\Entities\Rfloor;
+use Modules\Restaurant\Entities\Reservation;
 use Modules\Base\Entities\BaseModel;
 
 class Rtable extends BaseModel
 {
-    protected $fillable = ['name', 'capacity','image','floor_id','status', 'created_by', 'updated_by'];
+    protected $fillable = ['name', 'capacity','min_capacity','image','floor_id','booking_status','status', 'created_by', 'updated_by'];
 
     public function floor()
     {
         return $this->belongsTo(Rfloor::class);
+    }
+    public function reservationLInk()
+    {
+         return $this->belongsTo(Reservation::class,'table_id','id');
     }
 
 
@@ -33,9 +38,9 @@ class Rtable extends BaseModel
     private function get_datatable_query()
     {
         if(permission('rtable-bulk-delete')){
-            $this->column_order = [null,'id','name','capacity','image','floor_id','status',null];
+            $this->column_order = [null,'id','name','capacity','min_capacity','image','floor_id','booking_status','status',null];
         }else{
-            $this->column_order = ['id','name','capacity','image','floor_id','status',null];
+            $this->column_order = ['id','name','capacity','min_capacity','image','floor_id','booking_status','status',null];
         }
 
         $query = self::with('floor');

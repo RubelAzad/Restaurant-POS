@@ -1,0 +1,13 @@
+{
+    "name": "Externallink",
+    "alias": "externallink",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Externallink\\Providers\\ExternallinkServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

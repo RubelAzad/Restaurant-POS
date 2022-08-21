@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Models\User;
 use App\Models\Module;
 use App\Models\Permission;
 use Illuminate\Http\Request;
@@ -14,6 +14,8 @@ use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
+
 
 class LoginController extends Controller
 {
@@ -77,7 +79,7 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+            $this->sendLoginResponse($request);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -136,11 +138,20 @@ class LoginController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
+        $tokenId=uniqid();
+        //User::update(['login_token' => $tokenId]);
+        User::where('email','=' ,$request->email)->update(['login_token' => "$tokenId"]);
+
+        $role_id = auth()->user()->role_id;
+            
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
+        
 
         if ($response = $this->authenticated($request, $this->guard()->user())) {
+            
+            
             return $response;
         }
 
@@ -164,7 +175,6 @@ class LoginController extends Controller
             return back()->with('error','Your account is disabled. Please contact with admin.');
         }else{
             $role_id = auth()->user()->role_id;
-
             $menus = Module::doesntHave('parent')
                         ->orderBy('order','asc')
                         ->with('children');
@@ -234,6 +244,25 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        $role_id = auth()->user()->role_id;
+        if($role_id === 4){
+            $login_token =auth()->user()->login_token;
+            if($login_token == 'NULL'){
+                $this->guard()->logout();
+
+                $request->session()->invalidate();
+
+                $request->session()->regenerateToken();
+
+                if ($response = $this->loggedOut($request)) {
+                    return $response;
+                }
+
+                return $request->wantsJson()
+                    ? new Response('', 204)
+                    : redirect('/login');
+                    }
+        }
         $this->guard()->logout();
 
         $request->session()->invalidate();

@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('delete', 'RcategoryController@delete')->name('delete');
         Route::post('bulk-delete', 'RcategoryController@bulk_delete')->name('bulk.delete');
         Route::post('change-status', 'RcategoryController@change_status')->name('change.status');
+        Route::get('/get-category', 'RcategoryController@apiGetCategrory');
     });
 
     Route::get('rfloor', 'RfloorsController@index')->name('rfloor');
@@ -76,5 +77,35 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('delete', 'RaddonassignsController@delete')->name('delete');
         Route::post('bulk-delete', 'RaddonassignsController@bulk_delete')->name('bulk.delete');
         Route::post('change-status', 'RaddonassignsController@change_status')->name('change.status');
+    });
+    Route::get('rdiscount', 'RdiscountsController@index')->name('rdiscount');
+    Route::group(['prefix' => 'rdiscount', 'as'=>'rdiscount.'], function () {
+        Route::post('datatable-data', 'RdiscountsController@get_datatable_data')->name('datatable.data');
+        Route::post('store-or-update', 'RdiscountsController@store_or_update_data')->name('store.or.update');
+        Route::post('edit', 'RdiscountsController@edit')->name('edit');
+        Route::post('delete', 'RdiscountsController@delete')->name('delete');
+        Route::post('bulk-delete', 'RdiscountsController@bulk_delete')->name('bulk.delete');
+        Route::post('change-status', 'RdiscountsController@change_status')->name('change.status');
+    });
+
+    Route::get('rsetting', 'RsettingsController@index')->name('rsetting');
+    Route::group(['prefix' => 'rsetting', 'as'=>'rsetting.'], function () {
+        Route::post('datatable-data', 'RsettingsController@get_datatable_data')->name('datatable.data');
+        Route::post('store-or-update', 'RsettingsController@store_or_update_data')->name('store.or.update');
+        Route::post('edit', 'RsettingsController@edit')->name('edit');
+        Route::post('delete', 'RsettingsController@delete')->name('delete');
+        Route::post('bulk-delete', 'RsettingsController@bulk_delete')->name('bulk.delete');
+        Route::post('change-status', 'RsettingsController@change_status')->name('change.status');
+    });
+    Route::get('reservation', 'ReservationsController@index')->name('reservation');
+    Route::group(['prefix' => 'reservation', 'as'=>'reservation.'], function () {
+        Route::post('datatable-data', 'ReservationsController@get_datatable_data')->name('datatable.data');
+        Route::post('store-or-update', 'ReservationsController@store_or_update_data')->name('store.or.update');
+        Route::post('edit', 'ReservationsController@edit')->name('edit');
+        Route::post('delete', 'ReservationsController@delete')->name('delete');
+        Route::get('cancel', 'ReservationsController@cancel_list')->name('cancel');
+        Route::post('cancel-datatable-data', 'ReservationsController@get_datatable_cancel_data')->name('cancel.datatable.data');
+        Route::post('bulk-delete', 'ReservationsController@bulk_delete')->name('bulk.delete');
+        Route::post('change-status', 'ReservationsController@change_status')->name('change.status');
     });
 });

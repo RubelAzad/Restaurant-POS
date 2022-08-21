@@ -2,16 +2,22 @@
 
 namespace Modules\Restaurant\Entities;
 use Modules\Restaurant\Entities\Rcategory;
+use Modules\Restaurant\Entities\Rvariant;
 use Modules\Base\Entities\BaseModel;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ritem extends BaseModel
 {
+    protected $table = 'ritems';
+    //use HasFactory;
     protected $fillable = ['name', 'rcat_id','components','notes','description','image','tax','qty','alert_qty','offer','special','price','op_rate','os_date','oe_date','oc_time','ri_menu','status', 'created_by', 'updated_by'];
 
-    public function rCategory()
+
+    public function rcategory()
     {
-        return $this->belongsTo(Rcategory::class);
+        return $this->belongsTo(Rcategory::class,'rcat_id','id');
     }
+   
 
 
     protected $name;
@@ -41,7 +47,7 @@ class Ritem extends BaseModel
             $this->column_order = ['id','name', 'rcat_id','components','notes','description','image','tax','qty','alert_qty','offer','special','price','op_rate','os_date','oe_date','oc_time','ri_menu','status',null];
         }
 
-        $query = self::with('rCategory');
+        $query = self::with('rcategory');
 
         /*****************
          * *Search Data **

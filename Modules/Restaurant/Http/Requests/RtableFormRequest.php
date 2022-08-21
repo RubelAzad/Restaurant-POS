@@ -16,6 +16,7 @@ class RtableFormRequest extends FormRequest
         $rules['floor_id']  = ['required','integer'];
         $rules['name']         = ['required','string'];
         $rules['capacity']        = ['required','string'];
+        $rules['min_capacity']        = ['required','string'];
         $rules['image']        = ['nullable','image','mimes:jpg,png,jpeg'];
 
         

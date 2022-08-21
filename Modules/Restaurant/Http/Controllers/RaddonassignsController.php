@@ -65,7 +65,7 @@ class RaddonassignsController extends BaseController
                     $row[] = $no;
                     $row[] = $value->addon->name;
                     $row[] = $value->fooditem->name;
-                    $row[] = permission('raddonassign-edit') ? change_status($value->id,$value->status,$value->name) : STATUS_LABEL[$value->status];;
+                    $row[] = permission('raddonassign-edit') ? change_status($value->id,$value->status) : STATUS_LABEL[$value->status];;
                     $row[] = action_button($action);
                     $data[] = $row;
                 }
@@ -87,6 +87,8 @@ class RaddonassignsController extends BaseController
                 $collection = $this->track_data($request->update_id,$collection);
                 $result = $this->model->updateOrCreate(['id'=>$request->update_id],$collection->all());
                 $output = $this->store_message($result,$request->update_id);
+                
+                
             }else{
                 $output = $this->access_blocked();
             }

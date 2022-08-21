@@ -56,6 +56,8 @@ class RitemsController extends BaseController
                 $data = [];
                 $no = $request->input('start');
                 foreach ($list as $value) {
+                    
+                   
                     $no++;
                     $action = '';
 
@@ -77,6 +79,7 @@ class RitemsController extends BaseController
                     $row[] = $no;
                     $row[] = table_image($value->image,ITEM_IMAGE_PATH,$value->name);
                     $row[] = $value->name;
+                    $row[] = $value->rcategory->name;
                     $row[] = number_format($value->price,2);
                     $row[] = number_format($value->qty,2);
                     $row[] = $value->alert_qty ? number_format($value->alert_qty,2) : 0;
@@ -104,6 +107,7 @@ class RitemsController extends BaseController
                 $collection = collect($request->validated())->except(['image','qty','alert_qty']);
                 $qty = $request->qty ? $request->qty : null;
                 $alert_qty = $request->alert_qty ? $request->alert_qty : null;
+                $special = $request->special;
                 $ri_menu = implode(',', $request->ri_menu);
                 $collection = $this->track_data($request->update_id,$collection);
                 $image = $request->old_image;
@@ -114,7 +118,7 @@ class RitemsController extends BaseController
                         $this->delete_file($request->old_image,ITEM_IMAGE_PATH);
                     }
                 }
-                $collection = $collection->merge(compact('image','qty','alert_qty','ri_menu'));
+                $collection = $collection->merge(compact('image','qty','alert_qty','ri_menu','special'));
                 $result = $this->model->updateOrCreate(['id'=>$request->update_id],$collection->all());
                 $output = $this->store_message($result,$request->update_id);
             }else{
@@ -205,133 +209,5 @@ class RitemsController extends BaseController
         }
     }
 
-    public function generate_code()
-    {
-        return Keygen::numeric(8)->generate();
-    }
 
-    public function populate_unit($id)
-    {
-        $units = Unit::where('base_unit',$id)->orWhere('id',$id)->pluck('unit_name','id');
-        return json_encode($units);
-    }
-
-    public function ritem_autocomplete_search(Request $request)
-    {
-        if($request->ajax())
-        {
-            if(!empty($request->search))
-            {
-                $output = [];
-                if(!$request->has('warehouse_id')){
-                    $data = $this->model->where('name','like','%'.$request->search.'%')
-                                    ->orWhere('code','like','%'.$request->search.'%')
-                                    ->get();
-                    if(!$data->isEmpty())
-                    {
-                        foreach ($data as $key => $value) {
-                            $item['id'] = $value->id;
-                            $item['value'] = $value->code.' - '.$value->name;
-                            $item['label'] = $value->code.' - '.$value->name;
-                            $output[] = $item;
-                        }
-                    }else{
-                        $output['value'] = '';
-                        $output['label'] = 'No Record Found';
-                    }
-                }else{
-                    $search_text = $request->search;
-                    $data = Warehouseritem::with('ritem')->where([
-                       [ 'warehouse_id', $request->warehouse_id],['qty','>',0]
-                    ])->whereHas('ritem',function($q) use ($search_text){
-                        $q->where('name','like','%'.$search_text.'%')
-                        ->orWhere('code','like','%'.$search_text.'%');
-                    })->get();
-
-                    if(!$data->isEmpty())
-                    {
-                        foreach ($data as $key => $value) {
-                            $item['id'] = $value->ritem->id;
-                            $item['value'] = $value->ritem->code.' - '.$value->ritem->name;
-                            $item['label'] = $value->ritem->code.' - '.$value->ritem->name;
-                            $output[] = $item;
-                        }
-                    }else{
-                        $output['value'] = '';
-                        $output['label'] = 'No Record Found';
-                    }
-                }
-
-                return $output;
-            }
-        }
-    }
-
-    public function ritem_search(Request $request)
-    {
-        if($request->ajax())
-        {
-            $code = explode('-',$request['data']);
-            $ritem_data = $this->model->with('tax')->where('code',$code[0])->first();
-            if($ritem_data)
-            {
-                $ritem['id']         = $ritem_data->id;
-                $ritem['name']       = $ritem_data->name;
-                $ritem['code']       = $ritem_data->code;
-                if($request->type == 'purchase'){
-                    $ritem['cost']       = $ritem_data->cost;
-                }else{
-                    $ritem['price']      = $ritem_data->price;
-                }
-
-                $ritem['tax_rate']   = $ritem_data->tax->rate;
-                $ritem['tax_name']   = $ritem_data->tax->name;
-                $ritem['tax_method'] = $ritem_data->tax_method;
-                if($request->type == 'sale'){
-                    $warehouse_ritem = Warehouseritem::where([
-                        'warehouse_id'=>$request->warehouse_id,'ritem_id'=>$ritem_data->id])->first();
-                    $ritem['qty'] = $warehouse_ritem ? $warehouse_ritem->qty : 0;
-                }
-
-
-                $units = Unit::where('base_unit',$ritem_data->unit_id)->orWhere('id',$ritem_data->unit_id)->get();
-                $unit_name            = [];
-                $unit_operator        = [];
-                $unit_operation_value = [];
-                if($units)
-                {
-                    foreach ($units as $unit) {
-                        if($request->type == 'purchase'){
-                            if($ritem_data->purchase_unit_id == $unit->id)
-                            {
-                                array_unshift($unit_name,$unit->unit_name);
-                                array_unshift($unit_operator,$unit->operator);
-                                array_unshift($unit_operation_value,$unit->operation_value);
-                            }else{
-                                $unit_name           [] = $unit->unit_name;
-                                $unit_operator       [] = $unit->operator;
-                                $unit_operation_value[] = $unit->operation_value;
-                            }
-                        }else{
-                            if($ritem_data->sale_unit_id == $unit->id)
-                            {
-                                array_unshift($unit_name,$unit->unit_name);
-                                array_unshift($unit_operator,$unit->operator);
-                                array_unshift($unit_operation_value,$unit->operation_value);
-                            }else{
-                                $unit_name           [] = $unit->unit_name;
-                                $unit_operator       [] = $unit->operator;
-                                $unit_operation_value[] = $unit->operation_value;
-                            }
-                        }
-
-                    }
-                }
-                $ritem['unit_name'] = implode(',',$unit_name).',';
-                $ritem['unit_operator'] = implode(',',$unit_operator).',';
-                $ritem['unit_operation_value'] = implode(',',$unit_operation_value).',';
-                return $ritem;
-            }
-        }
-    }
 }

@@ -12,7 +12,7 @@
                     </li> 
                     @else
                     <li class="dt-side-nav__item {{ request()->is($menu->url) ? 'selected' : '' }}">
-                      <a href="{{ $menu->url ? url($menu->url) : 'javascript:void();' }}" class="dt-side-nav__link {{ request()->is($menu->url) ? 'active' : '' }}"
+                      <a href="{{ $menu->url ? url($menu->url) : 'javascript:void();' }}" target="{{$menu->target}}" class="dt-side-nav__link {{ request()->is($menu->url) ? 'active' : '' }}"
                          title="{{ $menu->module_name }}"> <i
                               class="{{ $menu->icon_class }}"></i>
                           <span class="dt-side-nav__text">{{ $menu->module_name }}</span> </a>
@@ -24,7 +24,7 @@
                     {{ request()->is($submenu->url) ? 'open' : '' }}
                     @endforeach
                     ">
-                      <a href="javascript:void(0)" class="dt-side-nav__link dt-side-nav__arrow" title="{{ $menu->module_name }}">
+                      <a href="javascript:void(0)" class="dt-side-nav__link dt-side-nav__arrow"  title="{{ $menu->module_name }}" target="{{$menu->target}}">
                           <i class="{{ $menu->icon_class }}"></i> <span class="dt-side-nav__text">{{ $menu->module_name }}</span>
                       </a>
 
@@ -32,7 +32,7 @@
                       <ul class="dt-side-nav__sub-menu">
                         @foreach ($menu->children as $submenu)
                         <li class="dt-side-nav__item {{ request()->is($submenu->url) ? 'selected' : '' }}">
-                          <a href="{{ $submenu->url ? url($submenu->url) : 'javascript:void();' }}" class="dt-side-nav__link {{ request()->is($submenu->url) ? 'active' : '' }}" title="Crypto"> <i
+                          <a href="{{ $submenu->url ? url($submenu->url) : 'javascript:void();' }}" target="{{$menu->target}}" class="dt-side-nav__link {{ request()->is($submenu->url) ? 'active' : '' }}"> <i
                                   class="{{ $submenu->icon_class }}"></i>
                               <span class="dt-side-nav__text">{{ $submenu->module_name }}</span> </a>
                         </li>

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\Customer\Entities\Customer;
-use Modules\Expense\Entities\Expense;
-use Modules\HRM\Entities\Payroll;
-use Modules\Purchase\Entities\Purchase;
-use Modules\Sale\Entities\Sale;
-use Modules\Supplier\Entities\Supplier;
+//use Modules\Customer\Entities\Customer;
+//use Modules\Expense\Entities\Expense;
+//use Modules\HRM\Entities\Payroll;
+//use Modules\Purchase\Entities\Purchase;
+//use Modules\Sale\Entities\Sale;
+//use Modules\Supplier\Entities\Supplier;
 
 class HomeController extends Controller
 {
@@ -23,10 +23,8 @@ class HomeController extends Controller
     {
         if (permission('dashboard-access')) {
             $this->setPageData('Dashboard','Dashboard','fas fa-tachometer-alt');
-            $start_date = date('Y-m').'-01';
-            $end_date = date('Y-m').'-31';
 
-            $sale = Sale::toBase()->whereDate('created_at','>=',$start_date)
+            /* $sale = Sale::toBase()->whereDate('created_at','>=',$start_date)
             ->whereDate('created_at','<=',$end_date)->sum('grand_total');
 
             $purchase = Purchase::toBase()->whereDate('created_at','>=',$start_date)
@@ -39,10 +37,10 @@ class HomeController extends Controller
             ->whereDate('created_at','<=',$end_date)->get()->count();
 
             $expense = Expense::toBase()->whereDate('created_at','>=',$start_date)
-            ->whereDate('created_at','<=',$end_date)->sum('amount');
+            ->whereDate('created_at','<=',$end_date)->sum('amount'); */
 
             //Cash Flow of Last 6 month
-            $start = strtotime(date('Y-m-01',strtotime('-6 month',strtotime(date('Y-m-d')))));
+           /*  $start = strtotime(date('Y-m-01',strtotime('-6 month',strtotime(date('Y-m-d')))));
             $end = strtotime(date('Y-m-31'));
             $payment_received = [];
             $payment_sent = [];
@@ -69,10 +67,10 @@ class HomeController extends Controller
                 $payment_sent    []      = number_format($sent_amount,2,'.','');
                 $month           []      = date('F',strtotime($start_date));
                 $start = strtotime('+1 month',$start);
-            }
+            } */
 
             //Yearly Report
-            $start = strtotime(date('Y').'-01-01');
+            /* $start = strtotime(date('Y').'-01-01');
             $end = strtotime(date('Y').'-12-31');
 
             $yearly_sale_amount = [];
@@ -105,14 +103,14 @@ class HomeController extends Controller
                 'yearly_sale_amount' => $yearly_sale_amount,
                 'yearly_purchase_amount' => $yearly_purchase_amount,
             ];
-
-            return view('home',$data);
+ */
+            return view('home');
         }else{
             return $this->unauthorized_access_blocked();
         }
     }
 
-    public function dashboard_data($start_date,$end_date)
+   /*  public function dashboard_data($start_date,$end_date)
     {
         if($start_date && $end_date)
         {
@@ -142,7 +140,7 @@ class HomeController extends Controller
 
             return response()->json($data);
         }
-    }
+    } */
 
     public function unauthorized()
     {

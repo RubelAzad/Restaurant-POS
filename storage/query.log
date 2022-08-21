@@ -1,0 +1,54 @@
+url         : http://192.168.10.30:3333/menu/module/1/edit/58
+method      : GET
+total_query : 15
+total_time  : 92.69
+--------------------
+
+sl          : 1
+query       : select count(*) as aggregate from `products` where `status` = ? and `alert_qty` > `qty`
+bindings    : 1
+final_query : select count(*) as aggregate from `products` where `status` = 1 and `alert_qty` > `qty`
+time        : 3.24
+file        : C:\wamp64\www\insigni-pos\app\Providers\AppServiceProvider.php:29
+line        : 29
+
+sl          : 2
+query       : select column_name as `column_name` from information_schema.columns where table_schema = ? and table_name = ?
+bindings    : insigniapos|settings
+final_query : select column_name as `column_name` from information_schema.columns where table_schema = 'insigniapos' and table_name = 'settings'
+time        : 0.61
+file        : C:\wamp64\www\insigni-pos\app\Providers\SettingServiceProvider.php:35
+line        : 35
+
+sl          : 3
+query       : select * from `settings`
+bindings    : 
+final_query : select * from `settings`
+time        : 0.48
+file        : C:\wamp64\www\insigni-pos\app\Providers\SettingServiceProvider.php:36
+line        : 36
+
+sl          : 10
+query       : select * from `menus` where `menus`.`id` = ? limit 1
+bindings    : 1
+final_query : select * from `menus` where `menus`.`id` = 1 limit 1
+time        : 0.71
+file        : C:\wamp64\www\insigni-pos\app\Repositories\MenuRepository.php:70
+line        : 70
+
+sl          : 11
+query       : select * from `modules` where not exists (select * from `modules` as `laravel_reserved_0` where `laravel_reserved_0`.`id` = `modules`.`parent_id`) and `modules`.`menu_id` in (1) order by `order` asc
+bindings    : 
+final_query : select * from `modules` where not exists (select * from `modules` as `laravel_reserved_0` where `laravel_reserved_0`.`id` = `modules`.`parent_id`) and `modules`.`menu_id` in (1) order by `order` asc
+time        : 1.24
+file        : C:\wamp64\www\insigni-pos\app\Repositories\MenuRepository.php:70
+line        : 70
+
+sl          : 12
+query       : select * from `modules` where `modules`.`id` = ? limit 1
+bindings    : 58
+final_query : select * from `modules` where `modules`.`id` = 58 limit 1
+time        : 0.67
+file        : C:\wamp64\www\insigni-pos\app\Repositories\BaseRepository.php:96
+line        : 96
+

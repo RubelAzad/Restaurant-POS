@@ -1,0 +1,13 @@
+{
+    "name": "Roomservice",
+    "alias": "roomservice",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Roomservice\\Providers\\RoomserviceServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
