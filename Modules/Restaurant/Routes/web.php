@@ -108,4 +108,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('bulk-delete', 'ReservationsController@bulk_delete')->name('bulk.delete');
         Route::post('change-status', 'ReservationsController@change_status')->name('change.status');
     });
+
+    Route::get('fcpackage', 'CombopackagesController@index')->name('fcpackage');
+    Route::group(['prefix' => 'fcpackage', 'as'=>'fcpackage.'], function () {
+        Route::post('datatable-data', 'CombopackagesController@get_datatable_data')->name('datatable.data');
+        Route::post('store-or-update', 'CombopackagesController@store_or_update_data')->name('store.or.update');
+        Route::post('edit', 'CombopackagesController@edit')->name('edit');
+        Route::post('delete', 'CombopackagesController@delete')->name('delete');
+        Route::get('cancel', 'CombopackagesController@cancel_list')->name('cancel');
+        Route::post('cancel-datatable-data', 'CombopackagesController@get_datatable_cancel_data')->name('cancel.datatable.data');
+        Route::post('bulk-delete', 'CombopackagesController@bulk_delete')->name('bulk.delete');
+        Route::post('change-status', 'CombopackagesController@change_status')->name('change.status');
+    });
 });

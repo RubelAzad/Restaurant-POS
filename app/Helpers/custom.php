@@ -1,9 +1,10 @@
-<?php 
+<?php
 define('LOGO_PATH','logo/');
 define('USER_AVATAR_PATH','user/');
 define('EMPLOYEE_IMAGE_PATH','employee/');
 define('TABLE_IMAGE_PATH','rtable/');
 define('ITEM_IMAGE_PATH','ritem/');
+define('ITEM_COMBO_IMAGE_PATH','combo/');
 define('CARD_IMAGE_PATH','card/');
 define('TASK_AFTER_IMAGE_PATH','after/');
 define('TASK_BEFORE_IMAGE_PATH','before/');
@@ -94,7 +95,7 @@ if(!function_exists('table_checkbox')){
 }
 if(!function_exists('change_status')){
     function change_status(int $id,int $status,string $name = null){
-        return $status == 1 ? '<span class="badge badge-success change_status" data-id="' . $id . '" data-name="' . $name . '" data-status="2" style="cursor:pointer;">Active</span>' : 
+        return $status == 1 ? '<span class="badge badge-success change_status" data-id="' . $id . '" data-name="' . $name . '" data-status="2" style="cursor:pointer;">Active</span>' :
         '<span class="badge badge-danger change_status" data-id="' . $id . '" data-name="' . $name . '" data-status="1" style="cursor:pointer;">Inactive</span>';
     }
 }
